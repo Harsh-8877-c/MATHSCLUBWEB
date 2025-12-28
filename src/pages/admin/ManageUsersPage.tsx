@@ -20,6 +20,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getApiUrl } from "@/utils/api";
 
+
 interface User {
     id: number;
     full_name: string;
@@ -44,6 +45,7 @@ const ManageUsersPage = () => {
         }
         fetchUsers();
     }, [user, navigate]);
+
 
     const fetchUsers = async () => {
         try {

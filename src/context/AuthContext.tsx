@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { toast } from "sonner";
 import { getApiUrl } from "@/utils/api";
 
+
 interface User {
     id: number;
     email: string;
@@ -35,6 +36,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
         setLoading(false);
     }, []);
+
+
+
 
     const login = async (data: any) => {
         try {

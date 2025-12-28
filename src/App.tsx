@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import SystemSettingsPage from "./pages/admin/SystemSettingsPage";
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
 import AnalyticsPage from "./pages/admin/AnalyticsPage";
+import CreateEventPage from "./pages/CreateEventPage";
 import RegisterEventPage from "./pages/RegisterEventPage";
 import AboutPage from "./pages/AboutPage";
 import EventsPage from "./pages/EventsPage";
@@ -55,6 +56,11 @@ const App = () => (
             {/* Common routes available to authenticated users (role logic inside pages if needed) */}
             <Route element={<ProtectedRoute />}>
               <Route path="/events" element={<EventsPage />} />
+
+              <Route element={<ProtectedRoute allowedRoles={['Admin', 'Coordinator', 'ClubMember']} />}>
+                <Route path="/events/create" element={<CreateEventPage />} />
+              </Route>
+
               <Route path="/events/:eventId" element={<EventDetailPage />} />
               <Route path="/events/:eventId/:section" element={<EventSectionPage />} />
               <Route path="/announcements" element={<AnnouncementsPage />} />

@@ -19,7 +19,7 @@ const roles = [
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  const { login, register } = useAuth();
+  const { login, register, loading } = useAuth(); // Assuming loading is exposed
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -47,34 +47,44 @@ const AuthPage = () => {
       return;
     }
 
+    await login({
+      email: loginData.email,
+      password: loginData.password,
+      role: loginData.role
+    });
+
+    // Navigation is handled inside AuthContext or effect, but for now we keep the redirect logic here if AuthContext returns success boolean
+    // However, looking at previous code, login returned boolean.
+    // Let's rely on the previous implementation which used `const success = await login(...)`
+  };
+
+  // Re-implementing with exact previous logic but adding loading state usage
+
+  const onLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!loginData.role || !loginData.email || !loginData.password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     const success = await login({
       email: loginData.email,
       password: loginData.password,
-      role: loginData.role // Optional validation on backend against role claim if needed, but mainly for UI context
+      role: loginData.role
     });
 
     if (success) {
-      // Redirect based on selected role (which should match user role)
       switch (loginData.role) {
-        case "Student":
-          navigate("/student-dashboard");
-          break;
-        case "ClubMember":
-          navigate("/member-dashboard");
-          break;
-        case "Coordinator":
-          navigate("/coordinator-dashboard");
-          break;
-        case "Admin":
-          navigate("/admin-dashboard");
-          break;
-        default:
-          navigate("/");
+        case "Student": navigate("/student-dashboard"); break;
+        case "ClubMember": navigate("/member-dashboard"); break;
+        case "Coordinator": navigate("/coordinator-dashboard"); break;
+        case "Admin": navigate("/admin-dashboard"); break;
+        default: navigate("/");
       }
     }
   };
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const onRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!registerData.role || !registerData.fullName || !registerData.username ||
       !registerData.email || !registerData.password || !registerData.confirmPassword) {
@@ -191,7 +201,7 @@ const AuthPage = () => {
 
               {/* Login Form */}
               {activeTab === "login" && (
-                <form onSubmit={handleLogin} className="space-y-4">
+                <form onSubmit={onLoginSubmit} className="space-y-4">
                   <div>
                     <Label htmlFor="login-role">Select Role</Label>
                     <Select
@@ -246,15 +256,15 @@ const AuthPage = () => {
                     </div>
                   </div>
 
-                  <Button type="submit" variant="auth" size="lg" className="w-full">
-                    Login
+                  <Button type="submit" variant="auth" size="lg" className="w-full" disabled={loading}>
+                    {loading ? "Logging in..." : "Login"}
                   </Button>
                 </form>
               )}
 
               {/* Register Form */}
               {activeTab === "register" && (
-                <form onSubmit={handleRegister} className="space-y-4">
+                <form onSubmit={onRegisterSubmit} className="space-y-4">
                   <div>
                     <Label htmlFor="register-role">Select Role</Label>
                     <Select
@@ -353,13 +363,15 @@ const AuthPage = () => {
                     </div>
                   </div>
 
-                  <Button type="submit" variant="auth" size="lg" className="w-full">
-                    Register
+                  <Button type="submit" variant="auth" size="lg" className="w-full" disabled={loading}>
+                    {loading ? "Registering..." : "Register"}
                   </Button>
 
-                  <p className="text-xs text-muted-foreground text-center">
-                    Registration requires admin approval.
-                  </p>
+                  {registerData.role !== 'Admin' && (
+                    <p className="text-xs text-muted-foreground text-center">
+                      Registration requires admin approval.
+                    </p>
+                  )}
                 </form>
               )}
             </div>

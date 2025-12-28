@@ -9,9 +9,13 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // Import controllers
 const userController = require('./controllers/userController');
+const eventController = require('./controllers/eventController');
+const mediaController = require('./controllers/mediaController');
+const authMiddleware = require('./middleware/authMiddleware');
 
 // Auth routes
 app.post('/api/auth/register', userController.register);
@@ -22,6 +26,17 @@ app.get('/api/users', userController.getAllUsers);
 app.delete('/api/users/:id', userController.deleteUser);
 app.put('/api/users/:id/approve', userController.approveUser);
 app.get('/api/analytics', userController.getAnalytics);
+
+// Event Routes
+app.get('/api/events', eventController.getAllEvents);
+app.post('/api/events', authMiddleware, eventController.createEvent);
+app.delete('/api/events/:id', authMiddleware, eventController.deleteEvent);
+
+const upload = require('./middleware/upload');
+
+// Media Routes
+app.get('/api/events/:eventId/media', mediaController.getEventMedia);
+app.post('/api/events/:eventId/media', authMiddleware, upload.single('file'), mediaController.addMedia);
 
 // Test database connection
 app.get('/api/test-db', async (req, res) => {

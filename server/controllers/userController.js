@@ -30,8 +30,8 @@ exports.register = async (req, res) => {
         const now = new Date();
 
         await db.query(
-            'INSERT INTO users (full_name, email, password_hash, role, is_approved, username, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-            [full_name, email, hashedPassword, userRole, isApproved, username, now, now]
+            'INSERT INTO users (full_name, email, password_hash, role, is_approved, username, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [full_name, email, hashedPassword, userRole, isApproved, username, now]
         );
 
         res.status(201).json({
@@ -161,7 +161,7 @@ exports.getAnalytics = async (req, res) => {
         const [studentGrowth] = await db.query(`
             SELECT DATE_FORMAT(createdAt, '%Y-%m') as month, COUNT(*) as count 
             FROM users 
-            WHERE role = 'Student'
+            WHERE role = 'Student' 
             GROUP BY month 
             ORDER BY month ASC
         `);
