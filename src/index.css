@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Colors */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary - Soft Blue */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
+
+    --radius: 0.75rem;
+
+    /* Auth Page Theme - Soft Pastels */
+    --auth-gradient-start: 199 89% 94%;
+    --auth-gradient-mid: 263 90% 95%;
+    --auth-gradient-end: 174 77% 94%;
+    --auth-lavender: 263 67% 81%;
+    --auth-blue: 217 91% 60%;
+
+    /* Dashboard Theme - Navy & Teal */
+    --dashboard-navy: 222 68% 23%;
+    --dashboard-sky: 199 94% 93%;
+    --dashboard-teal: 168 83% 40%;
+    --dashboard-gray: 220 13% 95%;
+
+    /* About Us Theme - Saffron & Purple */
+    --about-purple: 275 54% 36%;
+    --about-purple-deep: 278 63% 23%;
+    --about-saffron: 38 92% 50%;
+    --about-cream: 37 100% 97%;
+
+    /* Events Theme - Blue Spectrum */
+    --events-dark: 256 82% 11%;
+    --events-deep: 227 80% 20%;
+    --events-accent: 218 65% 38%;
+    --events-secondary: 211 68% 49%;
+    --events-light: 200 74% 59%;
+    --events-soft: 191 73% 65%;
+    --events-bg: 187 69% 80%;
+
+    /* Event Detail Theme - Teal & Light Blue */
+    --detail-teal: 175 52% 53%;
+    --detail-light: 198 100% 81%;
+    --detail-dark: 212 100% 27%;
+
+    /* Announcements Theme - Pink */
+    --announce-pink: 0 52% 94%;
+    --announce-accent: 342 96% 56%;
+    --announce-muted: 0 19% 69%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 240 6% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 213 27% 84%;
+    
+    --sidebar-background: 240 6% 10%;
+    --sidebar-foreground: 240 5% 96%;
+    --sidebar-primary: 224 76% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 240 5% 96%;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  /* Auth page gradient background */
+  .auth-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--auth-gradient-start)) 0%,
+      hsl(var(--auth-gradient-mid)) 50%,
+      hsl(var(--auth-gradient-end)) 100%
+    );
+  }
+
+  /* Noise texture overlay */
+  .noise-texture {
+    position: relative;
+  }
+  
+  .noise-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  /* Glassmorphism card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  /* About page gradient */
+  .about-gradient {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--about-cream)) 0%,
+      hsl(37 100% 95%) 100%
+    );
+  }
+
+  /* Events page gradient */
+  .events-gradient {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--events-bg)) 0%,
+      hsl(199 94% 93%) 100%
+    );
+  }
+
+  /* Announcements page gradient */
+  .announce-gradient {
+    background: hsl(var(--announce-pink));
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* Custom animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from { 
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from { 
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Stagger animation delays */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+}
