@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from "@/utils/api";
 
 interface User {
     id: number;
@@ -46,7 +47,7 @@ const ManageUsersPage = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await fetch('/api/users'); // Add auth header in real app
+            const res = await fetch(getApiUrl('/users')); // Add auth header in real app
             if (!res.ok) throw new Error("Failed to fetch");
             const data = await res.json();
             setUsers(data);
@@ -62,7 +63,7 @@ const ManageUsersPage = () => {
         if (!deleteId) return;
 
         try {
-            const res = await fetch(`/api/users/${deleteId}`, {
+            const res = await fetch(getApiUrl(`/users/${deleteId}`), {
                 method: 'DELETE'
             });
 
@@ -82,7 +83,7 @@ const ManageUsersPage = () => {
 
     const handleApprove = async (userId: number) => {
         try {
-            const res = await fetch(`/api/users/${userId}/approve`, {
+            const res = await fetch(getApiUrl(`/users/${userId}/approve`), {
                 method: 'PUT'
             });
 

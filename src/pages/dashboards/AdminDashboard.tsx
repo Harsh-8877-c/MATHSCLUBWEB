@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+import { getApiUrl } from "@/utils/api";
+
 const dashboardCards = [
     {
         title: "Manage Users",
@@ -55,7 +57,7 @@ const AdminDashboard = () => {
 
     const fetchAnalytics = async () => {
         try {
-            const res = await fetch('/api/analytics');
+            const res = await fetch(getApiUrl('/analytics'));
             if (res.ok) {
                 const data = await res.json();
                 setAnalytics(data);

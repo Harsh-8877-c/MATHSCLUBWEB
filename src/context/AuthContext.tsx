@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { toast } from "sonner";
+import { getApiUrl } from "@/utils/api";
 
 interface User {
     id: number;
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (data: any) => {
         try {
-            const response = await fetch("/api/auth/login", {
+            const response = await fetch(getApiUrl("/auth/login"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const register = async (data: any) => {
         try {
-            const response = await fetch("/api/auth/register", {
+            const response = await fetch(getApiUrl("/auth/register"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),

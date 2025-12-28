@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users, UserCheck, GraduationCap, Shield } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
+import { getApiUrl } from "@/utils/api";
 
 interface AnalyticsData {
     totalUsers: number;
@@ -38,7 +39,7 @@ const AnalyticsPage = () => {
 
     const fetchAnalytics = async () => {
         try {
-            const res = await fetch('/api/analytics');
+            const res = await fetch(getApiUrl('/analytics'));
             if (res.ok) {
                 const data = await res.json();
                 setAnalytics(data);
