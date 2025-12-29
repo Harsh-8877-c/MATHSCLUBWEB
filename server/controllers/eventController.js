@@ -12,8 +12,8 @@ exports.createEvent = async (req, res) => {
 
         // Insert new event
         const [result] = await db.execute(
-            'INSERT INTO events (title, description, date, time, location, created_by, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())',
-            [title, description, date, time, location, createdBy]
+            'INSERT INTO events (title, description, date, time, location, created_by, createdAt, event_date, updatedAt) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, NOW())',
+            [title, description, date, time, location, createdBy, date]
         );
 
         res.status(201).json({ message: 'Event created successfully', eventId: result.insertId });
